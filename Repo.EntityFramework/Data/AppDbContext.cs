@@ -1,11 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TechWebApplication.Models;
+using TechWebApplication.Models.Auth;
+using TechWebApplication.Models.Entities;
 
 namespace TechWebApplication.Repo.EntityFramework.Data
 {
     public class AppDbContext:IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Category>Category { get; set; }    
+        public DbSet<CategoryItem> CategoryItem { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<MediType> MediType { get; set; }
+        public DbSet<UserCategory> UserCategory { get; set; }   
+
+
         public AppDbContext():base(){ }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repo.EntityFramework\Data\Config\" />
-    <Folder Include="Services\" />
     <Folder Include="Repository\" />
+    <Folder Include="Services\Contract\" />
+    <Folder Include="Services\Implementation\" />
+    <Folder Include="Services\ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>

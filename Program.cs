@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TechWebApplication.Models;
+using TechWebApplication.Models.Auth;
 using TechWebApplication.Repo.EntityFramework.Data;
 
 namespace TechWebApplication
