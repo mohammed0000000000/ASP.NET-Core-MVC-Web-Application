@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using TechWebApplication.Models;
+using TechWebApplication.Repo.EntityFramework.Data;
+
 namespace TechWebApplication
 {
     public class Program
@@ -7,6 +12,15 @@ namespace TechWebApplication
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppDbContext>(options => {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("constr"));
+            });
+            builder.Services.AddScoped<DbContext, AppDbContext>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+
+            //builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+            builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
             var app = builder.Build();
 
