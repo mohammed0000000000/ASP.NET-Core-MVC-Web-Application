@@ -1,4 +1,4 @@
-﻿using TechWebApplication.Services.ViewModel.Auth;
+﻿using TechWebApplication.Services.ViewModel;
 
 namespace TechWebApplication.Services.Contract
 {

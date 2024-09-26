@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TechWebApplication.Models.Auth;
 using TechWebApplication.Repo.EntityFramework.Data;
+using TechWebApplication.Repository;
+using TechWebApplication.Services.Contract;
+using TechWebApplication.Services.Implementation;
+using TechWebApplication.Services.ViewModel.Utilities;
 
 namespace TechWebApplication
 {
@@ -17,7 +21,9 @@ namespace TechWebApplication
             });
             builder.Services.AddScoped<DbContext, AppDbContext>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
-
+            builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+            builder.Services.AddAutoMapper(typeof(CategoryMapper).Assembly);
+            builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 
             //builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
