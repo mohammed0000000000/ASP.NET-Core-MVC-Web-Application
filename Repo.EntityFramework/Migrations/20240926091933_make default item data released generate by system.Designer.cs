@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechWebApplication.Repo.EntityFramework.Data;
 
@@ -11,9 +12,11 @@ using TechWebApplication.Repo.EntityFramework.Data;
 namespace TechWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240926091933_make default item data released generate by system")]
+    partial class makedefaultitemdatareleasedgeneratebysystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,11 +288,7 @@ namespace TechWebApplication.Migrations
                     b.Property<DateTime>("DateTimeItemReleased")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(2024, 9, 26, 12, 25, 20, 937, DateTimeKind.Local).AddTicks(8212));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasDefaultValue(new DateTime(2024, 9, 26, 12, 19, 31, 612, DateTimeKind.Local).AddTicks(7841));
 
                     b.Property<int>("MediaTypeId")
                         .HasColumnType("int");

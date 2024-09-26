@@ -43,9 +43,10 @@
                 @Html.DisplayFor(modelItem => item.ThumbnailImagePath)
             </td>
             <td>
-                @Html.ActionLink("Edit", "UpdateCategory", new { id=item.Id  }) |
-                    @Html.ActionLink("Details", "DetailCategory", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "DeleteCategory", new { id = item.Id })
+                    <a asp-action="UpdateCategory" asp-route-id="@item.Id"> Edit </a> |
+                    <a asp-action="DetailCategory" asp-route-id="@item.Id"> Details </a> |
+                    <a asp-action="DeleteCategory" asp-route-id="@item.Id"> Delete </a> |
+                    <a asp-action="Index" asp-controller="CategoryItem" asp-route-id="@item.Id"> Update Items </a> 
             </td>
         </tr>
 }
