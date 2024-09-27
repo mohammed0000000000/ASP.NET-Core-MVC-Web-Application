@@ -63,7 +63,15 @@ namespace TechWebApplication.Services.Implementation
                     return null;
                 var res2 = await (from item in res
                             where item.CategoryId == id
-                            select new CategoryItem{ Id = item.Id, Title = item.Title, Description = item.Description, DateTimeItemReleased = item.DateTimeItemReleased, MediaTypeId = item.MediaTypeId, CategoryId = item.CategoryId }).ToListAsync();
+                            select new CategoryItem{ 
+                            Id = item.Id, 
+                            Title = item.Title,
+                            Description = item.Description,
+                            DateTimeItemReleased = item.DateTimeItemReleased, 
+                            MediaTypeId = item.MediaTypeId,
+                            CategoryId = item.CategoryId ,
+                            Content = item.Content,
+                            }).ToListAsync();
                 var categories = mapper.Map<List<CategoryItemViewModel>>(res2);
                 return categories;
             } catch (Exception ex) {

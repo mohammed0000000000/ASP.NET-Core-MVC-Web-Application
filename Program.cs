@@ -25,7 +25,7 @@ namespace TechWebApplication
             builder.Services.AddAutoMapper(typeof(CategoryMapper).Assembly);
             builder.Services.AddScoped<ICategoryServices, CategoryServices>();
             builder.Services.AddScoped<ICategoryItemServices, CategoryItemServices>();
-
+            builder.Services.AddScoped<IContentServices, ContentServices>();
 
             //builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();

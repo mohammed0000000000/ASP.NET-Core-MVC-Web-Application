@@ -12,6 +12,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -27,6 +28,8 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+             <td>@Html.DisplayFor(mdoelItem => item.Id)</td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -40,7 +43,14 @@
                 <a asp-action="UpdateCategoryItem" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="DetailCategoryitem" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="DeleteCategoryItem" asp-route-id="@item.Id">Delete</a> |
-                <a asp-action="" asp-route-id="">Update Content</a> |
+                @{
+                    if(item.Content is null) {
+                            <a asp-action="Create" asp-controller="Content" asp-route-id="@item.Id">Add Content</a>
+                        }
+                        else {
+                            <a asp-action="Update" asp-controller="Content" asp-route-id="@item.Content.Id">Update Content</a>
+                        }
+                    }
             </td>
         </tr>
 }

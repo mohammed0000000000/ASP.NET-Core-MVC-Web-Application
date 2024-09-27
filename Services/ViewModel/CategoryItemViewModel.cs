@@ -23,6 +23,6 @@ namespace TechWebApplication.Services.ViewModel
         public int MediaTypeId { get; set; }
         //public MediType MediaType { get; set; }
 
-        //public Content Content { get; set; }
+        public Content? Content { get; set; }
     }
 }

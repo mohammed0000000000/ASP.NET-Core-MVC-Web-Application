@@ -7,7 +7,8 @@ namespace TechWebApplication.Repo.EntityFramework.Data.Config
     public class ContentConfiguration : IEntityTypeConfiguration<Content>
     {
         public void Configure(EntityTypeBuilder<Content> builder) {
-            builder.HasKey(e => e.Id);  
+            builder.HasKey(e => e.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Title).IsRequired();
             builder.Property(x => x.HTMLContent).IsRequired(false).HasColumnType("VARCHAR").HasMaxLength(255);
             builder.Property(x => x.VideoLink).IsRequired(false).HasColumnType("VARCHAR").HasMaxLength(255);
