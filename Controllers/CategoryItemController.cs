@@ -12,7 +12,7 @@ namespace TechWebApplication.Controllers
             this.services = services;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(int id) {
+        public async Task<IActionResult> Index(int id) { // id => category id
             var res = await services.GetAll(id);
             ViewBag.categoryId = id;
             return View(res);
