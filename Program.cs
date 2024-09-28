@@ -20,13 +20,22 @@ namespace TechWebApplication
                 options.UseSqlServer(builder.Configuration.GetConnectionString("constr"));
             });
             builder.Services.AddScoped<DbContext, AppDbContext>();
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
             builder.Services.AddAutoMapper(typeof(CategoryMapper).Assembly);
             builder.Services.AddScoped<ICategoryServices, CategoryServices>();
             builder.Services.AddScoped<ICategoryItemServices, CategoryItemServices>();
             builder.Services.AddScoped<IContentServices, ContentServices>();
             builder.Services.AddScoped<IMediaTypeServices, MediaTypeServices>();
+
+            // Register UserManager and Role Manager
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option => {
+                option.Password.RequireUppercase = false;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+                option.Password.RequireDigit = false;
+                option.Password.RequiredUniqueChars = 0;
+            })
+            .AddEntityFrameworkStores<AppDbContext>();
 
             //builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();

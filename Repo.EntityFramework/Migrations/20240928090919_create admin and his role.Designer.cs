@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechWebApplication.Repo.EntityFramework.Data;
 
@@ -11,9 +12,11 @@ using TechWebApplication.Repo.EntityFramework.Data;
 namespace TechWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240928090919_create admin and his role")]
+    partial class createadminandhisrole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,7 +288,7 @@ namespace TechWebApplication.Migrations
                     b.Property<DateTime>("DateTimeItemReleased")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(2024, 9, 28, 14, 1, 21, 945, DateTimeKind.Local).AddTicks(2833));
+                        .HasDefaultValue(new DateTime(2024, 9, 28, 12, 9, 18, 259, DateTimeKind.Local).AddTicks(9361));
 
                     b.Property<string>("Description")
                         .IsRequired()
