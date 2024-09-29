@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -11,20 +12,49 @@ namespace TechWebApplication.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) {
+        private readonly IMapper mapper;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMapper mapper) {
             this.userManager = userManager; 
             this.signInManager = signInManager; 
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register() {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel) {
+            try {
+                if (ModelState.IsValid) {
+                    ApplicationUser user = new ApplicationUser {
+                        UserName = registerViewModel.Email,
+                        Email = registerViewModel.Email,
+                        PhoneNumber = registerViewModel.PhoneNumber,
+                        FirstName = registerViewModel.FirstName,
+                        LastName = registerViewModel.LastName,
+                        Address1 = registerViewModel.Address2,
+                        PostCode = registerViewModel.PostCode,
+                    };
+                    var res = await userManager.CreateAsync(user, registerViewModel.Password);
+
+                    if (res.Succeeded) {
+                        registerViewModel.RegistrationInValid = "";
+                        await signInManager.SignInAsync(user, false);
+                        return PartialView("_UserRegistrationPartial", registerViewModel);
+                    }
+
+                    if (res.Errors is not null) {
+                        foreach (var error in res.Errors) {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                throw;
+            }
+            return PartialView("_UserRegistrationPartial", registerViewModel);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel) {
             if (ModelState.IsValid) {
                 var res = await signInManager.PasswordSignInAsync(
@@ -33,14 +63,6 @@ namespace TechWebApplication.Controllers
                 isPersistent: loginViewModel.RememberMe,
                 lockoutOnFailure: false
                 );
-                //var user = await userManager.FindByEmailAsync(loginViewModel.Email);
-                //if (user is not null)
-                //{
-                //    var checkPassword = await userManager.CheckPasswordAsync(user, loginViewModel.Password);
-                //    if(checkPassword){
-                //        await signInManager.SignInAsync(user, loginViewModel.RememberMe);
-                //    }
-                //}
 
                 if (res.Succeeded) {
                     loginViewModel.LoginInValid = "";
@@ -50,12 +72,12 @@ namespace TechWebApplication.Controllers
             }
             return PartialView("_UserLoginPartial");
         }
-        [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout(string returnUrl = null){
             await signInManager.SignOutAsync();
-            return (returnUrl is not null) ? LocalRedirect(returnUrl) : (RedirectToAction("Login","Home"));
+            return (returnUrl is not null) ? LocalRedirect(returnUrl) : (RedirectToAction("Index","Home"));
         }
     }
 }

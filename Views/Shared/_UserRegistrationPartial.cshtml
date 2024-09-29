@@ -1,0 +1,92 @@
+﻿@model TechWebApplication.Services.ViewModel.RegisterViewModel
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="UserRegistrationForm" name="UserRegistrationForm" asp-controller="Account" asp-action="Register">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="RegistrationInValid">
+                <div class="form-group row mb-3">
+                    <label asp-for="Email" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Email" placeholder="Email Address" class="form-control">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="Password" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Password" placeholder="Password" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="ConfirmPassword" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="ConfirmPassword" placeholder="Confirm Password" class="form-control">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="FirstName" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="FirstName" placeholder="First Name" class="form-control">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="LastName" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="LastName" placeholder="Last Name" class="form-control">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="Address2" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="Address2" placeholder="Address" class="form-control">
+                        <span asp-validation-for="Address2" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="PostCode" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="PostCode" placeholder="Post Code" class="form-control">
+                        <span asp-validation-for="PostCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="PhoneNumber" class="col-md-4 col-form-label"></label>
+                    <div class="col-md-8">
+                        <input asp-for="PhoneNumber" placeholder="Phone Number" class="form-control">
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div class="col-sm-12">
+                        <div class="form-check">
+                            <input asp-for="AcceptUserAgreement" class="form-check-input">
+                            <label asp-for="AcceptUserAgreement" class="form-check-label">I accept the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" name="Register" id="Register" class="btn btn-primary">Register</button>
+        </div>
+    </div>
+</div>
+<!--
+    Create _UserRegistrationPartial 'Partial View'
+    Update '_loginPartial' partial view
+    Create RegistrationModel Class
+    Create Registration form
+    Update the 'UserAuthController'
+    Write JQuery and AJAX Client-Side code 
+-->
