@@ -29,15 +29,12 @@
             PhoneNumber: phoneNumber,
             AcceptUserAgreement: acceptUserAgreement,
         };
-        alert(userInput.Email);
-
         $.ajax({
             async: true,
             type: "POST",
             url: "https://localhost:44309/" + url,
             data: userInput,
             success: function (data) {
-                alert(data);
                 var parsed = $.parseHTML(data);
                 var hasErrors = $(parsed).find("input[name='RegistrationInValid']").val() == "true";
                 if (hasErrors == true) {
@@ -48,14 +45,13 @@
                     $.validator.unobtrusive.parse("#UserRegistrationForm");
                 }
                 else {
-                    alert("Register Successfully");
                     location.href = "/Home/Index";
                 }
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 var errorText = "Status: " + xhr.status + " - " + xhr.statusText;
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         })
     }

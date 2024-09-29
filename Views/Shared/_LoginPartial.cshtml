@@ -1,7 +1,12 @@
-﻿
+﻿﻿@using Microsoft.AspNetCore.Identity
+@using TechWebApplication.Models.Auth
+
+@inject UserManager<ApplicationUser> UserManager
+
 <ul class="navbar-nav">
     @{
         if(User.Identity.IsAuthenticated) {
+            <li class="nav-item"><a class="nav-link" asp-action="Logout" asp-controller="Account">Hello  @UserManager.GetUserAsync(User).Result?.FirstName!</a></li>
             <li class="nav-item"><a class="nav-link" asp-action="Logout" asp-controller="Account">Logout</a></li>
         } else {
             <li class="nav-item"><a class="nav-link" asp-action="Login" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#UserLoginModal">Login</a></li>
