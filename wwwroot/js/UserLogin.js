@@ -49,7 +49,8 @@
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 var errorText = "Status: " + xhr.status + " - " + xhr.statusText;
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                PresentClosableBootstrapAlert("#alert_placeholder_login", "danger", "Error", errorText);
+
             }
         });
     }

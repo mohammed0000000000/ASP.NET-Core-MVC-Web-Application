@@ -1,5 +1,48 @@
 ﻿$(function () {
-    var registrationButton = $("#UserRegistrationModal button[name = 'Register']").click(onUserRegistrationClick);
+
+    // CheckBox Functionality
+    var checkBox = $("#UserRegistrationModal #UserRegistrationForm input[type = 'checkbox']");
+    var registrationButton = $("#UserRegistrationModal button[name = 'Register']");
+    var emailInput = $("#UserRegistrationModal #UserRegistrationForm input[name = 'Email']");
+
+    registrationButton.prop("disabled", true);
+
+    checkBox.click(onAcceptUserArgreementClick);
+    registrationButton.click(onUserRegistrationClick);
+    emailInput.on('blur', onEmailChecker);
+
+    //console.log(emailInput);
+    function onEmailChecker() {
+        let email = $(this).val();
+        //console.log(email);
+        $.ajax({
+            async:true,
+            type: "GET",
+            url: "https://localhost:44309/" + `Account/UserNameExists?email=${email}`,
+            success: function (data) {
+                console.log(data);
+                if (data == true) {
+                    PresentClosableBootstrapAlert("#alert_placeholder_register", "warning", "Email Error", "Email is already use");
+                }
+                else {
+                    CloseAlert("#alert_placeholder_register");
+                }
+            },
+            error: function (jqXHR, textStatus) {
+                PresentClosableBootstrapAlert("#alert_placeholder_register", "warning", "", "Email Error");
+            }
+        })
+    }
+    function onAcceptUserArgreementClick() {
+        if ($(this).is(':checked')) {
+            registrationButton.prop("disabled", false);
+        }
+        else {
+            registrationButton.prop("disabled", true);
+        }
+    }
+
+    //var registrationButton = $("#UserRegistrationModal button[name = 'Register']").click(onUserRegistrationClick);
     function onUserRegistrationClick() {
 
         var url = "Account/Register";
@@ -51,7 +94,8 @@
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 var errorText = "Status: " + xhr.status + " - " + xhr.statusText;
-                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                PresentClosableBootstrapAlert("#alert_placeholder_register", "warning", "Register Error", errorText
+                );
             }
         })
     }

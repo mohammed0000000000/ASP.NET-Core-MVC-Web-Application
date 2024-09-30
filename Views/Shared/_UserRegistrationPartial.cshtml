@@ -7,6 +7,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            <div id="alert_placeholder_register">
+            </div>
             <form id="UserRegistrationForm" name="UserRegistrationForm" asp-controller="Account" asp-action="Register">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input type="hidden" asp-for="RegistrationInValid">
@@ -82,11 +84,3 @@
         </div>
     </div>
 </div>
-<!--
-    Create _UserRegistrationPartial 'Partial View'
-    Update '_loginPartial' partial view
-    Create RegistrationModel Class
-    Create Registration form
-    Update the 'UserAuthController'
-    Write JQuery and AJAX Client-Side code 
--->

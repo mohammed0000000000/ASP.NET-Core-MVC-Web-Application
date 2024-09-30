@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using TechWebApplication.Models.Auth;
 using TechWebApplication.Services.ViewModel;
 
@@ -79,6 +81,14 @@ namespace TechWebApplication.Controllers
             await signInManager.SignOutAsync();
             return (returnUrl is not null) ? LocalRedirect(returnUrl) : (RedirectToAction("Index","Home"));
         }
+
+        [AllowAnonymous]
+        public async Task<bool> UserNameExists(string email) {
+            try {
+                var res = await userManager.FindByEmailAsync(email);
+               return res != null;
+            } catch (Exception ex) { throw; }
+        }
     }
 }
 /*
@@ -89,4 +99,21 @@ namespace TechWebApplication.Controllers
     4) create the Login form
     5) create the 'UserAuthController' Controller Class
     6) Write the jQuery and AJAX Client-side Code
+ */
+
+/*
+    Create _UserRegistrationPartial 'Partial View'
+    Update '_loginPartial' partial view
+    Create RegistrationModel Class
+    Create Registration form
+    Update the 'UserAuthController'
+    Write JQuery and AJAX Client-Side code 
+*/
+/*
+    'AcceptUserAgreement' Checkbox Functionality
+    Server-side Code to Check if UserName Exists
+    Warn the User about Existing Username
+    Server-side Code To Add Error Message to ModelState
+    Make Bootstrap Alert Code Reusable
+    Tidy up the Code
  */

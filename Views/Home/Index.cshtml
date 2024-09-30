@@ -21,9 +21,8 @@
     <partial name="_UserRegistrationPartial"/>
 </div>
 @section Scripts{
-    <script src="~/js/UserLogin.js" asp-append-version="true"></script>
-    <script src="~/js/UserRegistration.js" asp-append-version="true"></script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_AuthScriptsPartial");
     }
 }

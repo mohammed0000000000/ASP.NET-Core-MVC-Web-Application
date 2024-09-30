@@ -7,6 +7,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            <div id="alert_placeholder_login"></div>
             <form id="UserLoginForm" asp-action="Login" asp-controller="Account">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="LoginInValid" />
