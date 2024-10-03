@@ -1,0 +1,44 @@
+﻿@model TechWebApplication.Services.ViewModel.UserCategoryListViewModel;
+@using TechWebApplication.Comparers;
+<table class="table-hover table">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            if(Model.Users is not null) {
+                foreach (var user in Model.Users) {
+                    <tr>
+                        <td style="text-align:center">
+                            @{
+                                if(Model.UsersSelected != null && Model.UsersSelected.Contains(user, new CompareUsers())) {
+                                    <input type="checkbox" id="UsersSelected" class="form-check-input" name="UsersSelected" value="@user.Id" checked />
+                                } else {
+                                    <input type="checkbox" id="UsersSelected" class="form-check-input" name="UsersSelected"  value="@user.Id" />
+                                }
+                            }
+                        </td>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                    </tr>
+                }
+               //  if(Model.UsersSelected is not null){
+               //      foreach(var selectedUser in Model.UsersSelected) {
+               //          <tr>    
+               //              <td>
+               //                  <input type="checkbox" id="UsersSelected" class="form-check-input" name="UsersSelected" value="" checked />
+               //              </td>
+               //              <td>@selectedUser.FirstName</td>
+               //              <td>@selectedUser.LastName</td>
+               //          </tr>
+               //      }
+               // }
+            }
+        }
+    </tbody>
+</table>

@@ -12,8 +12,8 @@ using TechWebApplication.Repo.EntityFramework.Data;
 namespace TechWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240928090919_create admin and his role")]
-    partial class createadminandhisrole
+    [Migration("20241002101510_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -288,7 +288,7 @@ namespace TechWebApplication.Migrations
                     b.Property<DateTime>("DateTimeItemReleased")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(2024, 9, 28, 12, 9, 18, 259, DateTimeKind.Local).AddTicks(9361));
+                        .HasDefaultValue(new DateTime(2024, 10, 2, 13, 15, 9, 135, DateTimeKind.Local).AddTicks(5626));
 
                     b.Property<string>("Description")
                         .IsRequired()

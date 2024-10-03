@@ -13,7 +13,7 @@ namespace TechWebApplication.Repo.EntityFramework.Data.Config
             builder.HasOne(x => x.MediaType).WithMany(x => x.CategoryItems).HasForeignKey(x => x.MediaTypeId);
 
 
-            builder.ToTable("CategoryItems");
+            builder.ToTable("CategoryItem");
 
         }
     }

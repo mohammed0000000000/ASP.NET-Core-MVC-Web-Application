@@ -12,8 +12,8 @@ using TechWebApplication.Repo.EntityFramework.Data;
 namespace TechWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240926091933_make default item data released generate by system")]
-    partial class makedefaultitemdatareleasedgeneratebysystem
+    [Migration("20241002191004_addNewAdmin")]
+    partial class addNewAdmin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -288,7 +288,11 @@ namespace TechWebApplication.Migrations
                     b.Property<DateTime>("DateTimeItemReleased")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(2024, 9, 26, 12, 19, 31, 612, DateTimeKind.Local).AddTicks(7841));
+                        .HasDefaultValue(new DateTime(2024, 10, 2, 22, 10, 2, 374, DateTimeKind.Local).AddTicks(7030));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MediaTypeId")
                         .HasColumnType("int");

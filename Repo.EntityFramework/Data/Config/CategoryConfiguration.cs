@@ -12,7 +12,7 @@ namespace TechWebApplication.Repo.EntityFramework.Data.Config
             builder.Property(x => x.ThumbnailImagePath).IsRequired(true).HasMaxLength(255).HasColumnType("VARCHAR");
             builder.HasMany(x => x.ApplicationUsers).
             WithMany(x => x.Categories).UsingEntity<UserCategory>();
-            builder.ToTable("Categories");
+            builder.ToTable("Category");
         }
     }
 }

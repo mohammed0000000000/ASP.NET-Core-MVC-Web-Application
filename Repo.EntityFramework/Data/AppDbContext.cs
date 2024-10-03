@@ -7,11 +7,11 @@ namespace TechWebApplication.Repo.EntityFramework.Data
 {
     public class AppDbContext:IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Category>Category { get; set; }    
+        public DbSet<Category>Category { get; set; }
         public DbSet<CategoryItem> CategoryItem { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<MediType> MediType { get; set; }
-        public DbSet<UserCategory> UserCategory { get; set; }   
+        public DbSet<UserCategory> UserCategory { get; set; }
 
 
         public AppDbContext():base(){ }
@@ -19,7 +19,7 @@ namespace TechWebApplication.Repo.EntityFramework.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TechWebApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-3ASORV1\\SQLEXPRESS01;Initial Catalog=TECWEBAPP;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);

@@ -12,8 +12,8 @@ using TechWebApplication.Repo.EntityFramework.Data;
 namespace TechWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240924210325_User configuration")]
-    partial class Userconfiguration
+    [Migration("20241002133910_empty")]
+    partial class empty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace TechWebApplication.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TechWebApplication.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TechWebApplication.Models.Auth.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -247,6 +247,148 @@ namespace TechWebApplication.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("TechWebApplication.Models.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("ThumbnailImagePath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.CategoryItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTimeItemReleased")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValue(new DateTime(2024, 10, 2, 16, 39, 7, 950, DateTimeKind.Local).AddTicks(8839));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MediaTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(180)
+                        .HasColumnType("VARCHAR");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("MediaTypeId");
+
+                    b.ToTable("CategoryItems", (string)null);
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.Content", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HTMLContent")
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoLink")
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryItemId")
+                        .IsUnique();
+
+                    b.ToTable("Content", (string)null);
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.MediType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ThumbnailImagePath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MediTypes", (string)null);
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.UserCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCategories", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -258,7 +400,7 @@ namespace TechWebApplication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TechWebApplication.Models.ApplicationUser", null)
+                    b.HasOne("TechWebApplication.Models.Auth.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -267,7 +409,7 @@ namespace TechWebApplication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TechWebApplication.Models.ApplicationUser", null)
+                    b.HasOne("TechWebApplication.Models.Auth.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -282,7 +424,7 @@ namespace TechWebApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TechWebApplication.Models.ApplicationUser", null)
+                    b.HasOne("TechWebApplication.Models.Auth.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -291,11 +433,83 @@ namespace TechWebApplication.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TechWebApplication.Models.ApplicationUser", null)
+                    b.HasOne("TechWebApplication.Models.Auth.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.CategoryItem", b =>
+                {
+                    b.HasOne("TechWebApplication.Models.Entities.Category", "Category")
+                        .WithMany("CategoryItems")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechWebApplication.Models.Entities.MediType", "MediaType")
+                        .WithMany("CategoryItems")
+                        .HasForeignKey("MediaTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("MediaType");
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.Content", b =>
+                {
+                    b.HasOne("TechWebApplication.Models.Entities.CategoryItem", "CategoryItem")
+                        .WithOne("Content")
+                        .HasForeignKey("TechWebApplication.Models.Entities.Content", "CategoryItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CategoryItem");
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.UserCategory", b =>
+                {
+                    b.HasOne("TechWebApplication.Models.Entities.Category", "Category")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechWebApplication.Models.Auth.ApplicationUser", "User")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Auth.ApplicationUser", b =>
+                {
+                    b.Navigation("UserCategories");
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.Category", b =>
+                {
+                    b.Navigation("CategoryItems");
+
+                    b.Navigation("UserCategories");
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.CategoryItem", b =>
+                {
+                    b.Navigation("Content")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TechWebApplication.Models.Entities.MediType", b =>
+                {
+                    b.Navigation("CategoryItems");
                 });
 #pragma warning restore 612, 618
         }

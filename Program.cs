@@ -29,11 +29,6 @@ namespace TechWebApplication
 
             // Register UserManager and Role Manager
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option => {
-                option.Password.RequireUppercase = false;
-                option.Password.RequireLowercase = false;
-                option.Password.RequireNonAlphanumeric = false;
-                option.Password.RequireDigit = false;
-                option.Password.RequiredUniqueChars = 0;
             })
             .AddEntityFrameworkStores<AppDbContext>();
 

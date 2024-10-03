@@ -12,8 +12,8 @@ using TechWebApplication.Repo.EntityFramework.Data;
 namespace TechWebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240928110123_add new admin")]
-    partial class addnewadmin
+    [Migration("20241003182700_rename tables names")]
+    partial class renametablesnames
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -271,7 +271,7 @@ namespace TechWebApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("TechWebApplication.Models.Entities.CategoryItem", b =>
@@ -288,7 +288,7 @@ namespace TechWebApplication.Migrations
                     b.Property<DateTime>("DateTimeItemReleased")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
-                        .HasDefaultValue(new DateTime(2024, 9, 28, 14, 1, 21, 945, DateTimeKind.Local).AddTicks(2833));
+                        .HasDefaultValue(new DateTime(2024, 10, 3, 21, 26, 59, 226, DateTimeKind.Local).AddTicks(614));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -308,7 +308,7 @@ namespace TechWebApplication.Migrations
 
                     b.HasIndex("MediaTypeId");
 
-                    b.ToTable("CategoryItems", (string)null);
+                    b.ToTable("CategoryItem", (string)null);
                 });
 
             modelBuilder.Entity("TechWebApplication.Models.Entities.Content", b =>
@@ -362,7 +362,7 @@ namespace TechWebApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediTypes", (string)null);
+                    b.ToTable("MediType", (string)null);
                 });
 
             modelBuilder.Entity("TechWebApplication.Models.Entities.UserCategory", b =>
@@ -386,7 +386,7 @@ namespace TechWebApplication.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCategories", (string)null);
+                    b.ToTable("UserCategory", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

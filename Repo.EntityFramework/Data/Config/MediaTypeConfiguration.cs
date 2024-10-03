@@ -10,7 +10,7 @@ namespace TechWebApplication.Repo.EntityFramework.Data.Config
             builder.Property(x => x.Title).IsRequired(true).HasColumnType("VARCHAR").HasMaxLength(255);
             builder.Property(x => x.ThumbnailImagePath).IsRequired(true).HasMaxLength(255).HasColumnType("VARCHAR");
             //builder.Property(x => x.)
-            builder.ToTable("MediTypes");
+            builder.ToTable("MediType");
         }
     }
 }

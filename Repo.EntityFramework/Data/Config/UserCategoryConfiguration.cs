@@ -8,7 +8,7 @@ namespace TechWebApplication.Repo.EntityFramework.Data.Config
     {
         public void Configure(EntityTypeBuilder<UserCategory> builder) {
             builder.HasKey(x => x.Id);
-            builder.ToTable("UserCategories");
+            builder.ToTable("UserCategory");
         }
     }
 }

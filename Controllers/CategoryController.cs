@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using TechWebApplication.Services.Contract;
 using TechWebApplication.Services.ViewModel;
 
@@ -58,5 +59,7 @@ namespace TechWebApplication.Controllers
             var res = await services.GetById(id);
             return View(res);
         }
+
+    
     }
 }
