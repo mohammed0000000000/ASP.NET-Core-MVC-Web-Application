@@ -30,8 +30,9 @@
         var categoryId = $("#CategoryId").val();
         var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
         var usersSelected = [];
-        //DisableControls(true);
-        //$(".progress").show("fade");
+        DisableControls(true);
+
+        $(".progress").show("fade");
         $('input[type=checkbox]:checked').each(function () {
             var userModel = {
                 Id: $(this).attr("value")
@@ -52,22 +53,25 @@
                 success: function (data) {
                     $("#UsersCheckList").html(data);
 
-                    //$(".progress").hide("fade", function () {
-                    //    $(".alert-success").fadeTo(2000, 500).slideUp(500, function () {
-                    //        DisableControls(false);
-                    //    });
-                    //});
+                    $(".progress").hide("fade", function () {
+                        $(".alert-success").fadeTo(2000, 500).slideUp(500, function () {
+                            DisableControls(false);
+                        });
+                    });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    PresentClosableBootstrapAlert("#alert_placeholder", "danger", "An Error occured", thrownError);
-                    //$(".progress").hide("fade", function () {
-                    //    PresentClosableBootstrapAlert("#alert_placeholder", "danger", "An error occurred!", errorText);
-                    //    console.error("An error has occurred: " + thrownError + "Status: " + xhr.status + "\r\n" + xhr.responseText);
-
-                    //    DisableControls(false);
-                    //});
+                    $(".progress").hide("fade", function () {
+                        PresentClosableBootstrapAlert("#alert_placeholder", "danger", "An error occurred!", errorText);
+                        console.error("An error has occurred: " + thrownError + "Status: " + xhr.status + "\r\n" + xhr.responseText);
+                        DisableControls(false);
+                    });
                 }
             }
         );
+        function DisabledControls(disabled) {
+            $("input[name='checkbox']").prop("disabled", disabled);
+            $("#SaveSelectedUsers").prop("disabled", disabled);
+            $('select').prop("disabled", disabled);
+        }
     });
 })

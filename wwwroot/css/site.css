@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+.progress, .alert-sucess{
+    position:fixed;
+    height:100px;
+    top:50%;
+    left : 0;
+    width:90%;
+    margin-left:5%;
+}
+.footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    white-space:nowrap;
+    line-height:60px;
+}
