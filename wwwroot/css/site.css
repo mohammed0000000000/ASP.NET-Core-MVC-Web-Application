@@ -28,10 +28,23 @@ body {
     width:90%;
     margin-left:5%;
 }
-.footer{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    white-space:nowrap;
-    line-height:60px;
+.video-container{
+    overflow:hidden;
+    padding-top:56.25%;
+    position:relative;
+}
+    .video-container iframe {
+        border: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
 }

@@ -13,6 +13,11 @@ namespace TechWebApplication.Controllers
             this.categoryItemServices = categoryItemServices;
         }
         [HttpGet]
+        public async Task<IActionResult>Index(int id){
+            var res = await contentServices.GetByItemId(id);
+            return View(res);
+        }
+        [HttpGet]
         public async Task<IActionResult> Create(int id){
             var categoryItem = await categoryItemServices.GetById(id);
             var categoryItemMediaType = categoryItem.MediaTypeId;

@@ -1,0 +1,21 @@
+﻿@model TechWebApplication.Services.ViewModel.ContentViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@Model.Title</h1>
+<div class="row">
+    @{
+        if (Model.HTMLContent is not null) {
+            <article class="mt-3 col-md-10" id="TextContent">
+                @Html.Raw(Model.HTMLContent)
+            </article>
+        } else {
+            <div class="mt-3 col-md-10">
+                <div id="VideoContent" class="video-container mt-3">
+                    <iframe width="550" height="350" src="@Model.VideoLink" allow="autoplay" allowfullscreen  frameborder="0"></iframe>
+                </div>
+            </div>
+        }
+    }
+</div>
