@@ -1,28 +1,95 @@
-﻿@{
+﻿@model TechWebApplication.Services.ViewModel.CategoryDetailsViewModel
+
+@using TechWebApplication.Services.ViewModel
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
-@{
-    if (User.Identity.IsAuthenticated) {
-        <div class="text-center">
-            <h1 class="display-4">Welcome</h1>
-            <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+@if (Model.GroupedCategoryItemsByCategoryViewModels != null) {
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Your Courses</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <a asp-controller="CategoriesToUser" asp-action="Index" class="btn btn-outline-dark">Choose Courses</a>
+        </div>
+    </div>
+
+    @if (Model.GroupedCategoryItemsByCategoryViewModels.Count() > 0) {
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+
+                @foreach (var cat in Model.GroupedCategoryItemsByCategoryViewModels) {
+                    <div class="card mt-2">
+                        <h4 class="card-header text-secondary bg-white" style="cursor:pointer" data-bs-toggle="collapse" data-bs-target="#collapse_@cat.Id" aria-expanded="false" aria-controls="collapse_@cat.Id">
+                            @cat.Title
+                        </h4>
+                        <div id="collapse_@cat.Id" class="collapse" aria-expanded="false" aria-controls="collapse_@cat.Id">
+                            <hr />
+                            @foreach (var item in cat.Items) {
+                                <div class="d-flex gap-2 mt-2 p-2 flex-row">
+                                    <img src="~/Images/@item.MediaImagePath" width="100" height="100" class="img-thumbnail mr-2" />
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title mt-2">
+                                            <a class="text-dark" asp-controller="Content" asp-action="Index" asp-route-Id="@item.CategoryItemId">@item.CategoryItemTitle</a>
+                                        </h5>
+                                        <p class="card-text text-dark mt-2">
+                                            @item.CategoryItemDescription
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+            </div>
         </div>
     } else {
-        <div class="text-center">
-            <h1 class="display-4">Not Logged In</h1>
-        </div>
+        <h4 class="mt-2 text-warning">You are currently not matched with any courses</h4>
+
     }
+} else {
+    <partial name="_DefaultHomePageContentPartial" model="@Model.Categories" />
 }
 
-<div class="modal fade" id="UserLoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <partial name="_UserLoginPartial"/>
+
+
+
+<div class="modal fade" id="UserLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <partial name="_UserLoginPartial" model="new LoginViewModel
+        {
+            Email = String.Empty,
+            Password = String.Empty,
+            RememberMe = false
+        }">
 </div>
-<div class="modal fade" id="UserRegistrationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <partial name="_UserRegistrationPartial"/>
+
+<div class="modal fade" id="UserRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <partial name="_UserRegistrationPartial" model="new RegisterViewModel
+        {
+            Email = String.Empty,
+            Password = String.Empty,
+            ConfirmPassword = String.Empty,
+            FirstName = String.Empty,
+            LastName = String.Empty,
+            PhoneNumber = String.Empty,
+            Address2 = String.Empty,
+            PostCode = String.Empty,
+            AcceptUserAgreement = false
+        }">
 </div>
-@section Scripts{
+
+@section Scripts
+{
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
         await Html.RenderPartialAsync("_AuthScriptsPartial");
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
     }
+
 }

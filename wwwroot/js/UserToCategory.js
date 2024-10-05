@@ -61,14 +61,14 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $(".progress").hide("fade", function () {
-                        PresentClosableBootstrapAlert("#alert_placeholder", "danger", "An error occurred!", errorText);
+                        PresentClosableBootstrapAlert("#alert_placeholder", "danger", "An error occurred!", thrownError);
                         console.error("An error has occurred: " + thrownError + "Status: " + xhr.status + "\r\n" + xhr.responseText);
                         DisableControls(false);
                     });
                 }
             }
         );
-        function DisabledControls(disabled) {
+        function DisableControls(disabled) {
             $("input[name='checkbox']").prop("disabled", disabled);
             $("#SaveSelectedUsers").prop("disabled", disabled);
             $('select').prop("disabled", disabled);
