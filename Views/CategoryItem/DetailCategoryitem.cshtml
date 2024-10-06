@@ -4,11 +4,9 @@
     ViewData["Title"] = "DetailCategoryitem";
 }
 
-<h1>DetailCategoryitem</h1>
+<h1 class="text-primary my-5">Detail Of Item</h1>
 
 <div>
-    <h4>CategoryItemViewModel</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
@@ -49,6 +47,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "UpdateCategoryItem", new { id = Model.Id }) |
-    <a asp-action="Index" asp-route-id="@Model.CategoryId">Back to List</a>
+    <a asp-action="UpdateCategoryItem" asp-controller="CategoryItem" asp-route-id="@Model.Id" class="btn btn-primary me-5">Edit</a>
+    <a asp-action="Index" asp-route-id="@Model.CategoryId" class="btn btn-secondary">Back to List</a>
 </div>

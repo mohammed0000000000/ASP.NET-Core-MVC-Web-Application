@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-primary my-5">Media Types </h1>
 <table class="table">
     <thead>
         <tr>
@@ -25,8 +25,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ThumbnailImagePath)
             </td>
-            <td>
-                @Html.ActionLink("Update", "Update", new { id=item.Id  }) 
+            <td class="text-end">
+                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-primary">Update</a>
             </td>
         </tr>
 }

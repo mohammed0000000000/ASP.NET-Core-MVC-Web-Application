@@ -4,17 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="my-4">Category</h1>
 
 <p>
-    <a asp-action="CreateCategory" asp-controller="Category">Create New</a>
+    <a asp-action="CreateCategory" asp-controller="Category" class="btn btn-outline-info text-decoration-none"><i class="fa-solid fa-plus me-2"></i>Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -31,9 +28,6 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
@@ -42,11 +36,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ThumbnailImagePath)
             </td>
-            <td>
-                    <a asp-action="UpdateCategory" asp-route-id="@item.Id"> Edit </a> |
-                    <a asp-action="DetailCategory" asp-route-id="@item.Id"> Details </a> |
-                    <a asp-action="DeleteCategory" asp-route-id="@item.Id"> Delete </a> |
-                    <a asp-action="Index" asp-controller="CategoryItem" asp-route-id="@item.Id"> Update Items </a> 
+            <td class="text-end">
+                <a asp-action="UpdateCategory" asp-route-id="@item.Id" class="text-info text-decoration-none me-2"> <i class="fa-solid fa-pen-to-square"></i> </a>
+                <a asp-action="DetailCategory" asp-route-id="@item.Id" class="text-dark text-decoration-none me-2"> <i class="fa-solid fa-table"></i> </a>
+                    <a asp-action="DeleteCategory" asp-route-id="@item.Id" class="text-danger text-decoration-none me-2"> <i class="fa-solid fa-trash"></i> </a>
+                <a asp-action="Index" asp-controller="CategoryItem" asp-route-id="@item.Id" class="btn btn-outline-info text-decoration-none"> Update Items </a> 
             </td>
         </tr>
 }

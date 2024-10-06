@@ -4,22 +4,19 @@
     ViewData["Title"] = "CreateCategoryItem";
 }
 
-<h1>CreateCategoryItem</h1>
-
-<h4>CategoryItemViewModel</h4>
-<hr />
+<h1 class="my-4 text-primary">Create Item</h1>
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="CreateCategoryItem">
+        <form asp-action="CreateCategoryItem" class="text">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label mb-1"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" rows="2" ></textarea>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label mb-1"></label>
+                <textarea asp-for="Description" class="form-control" rows="6" ></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group" hidden>
@@ -31,23 +28,23 @@
                 <label asp-for="CategoryId" class="control-label"></label>
                 <input asp-for="CategoryId" class="form-control" value="@ViewBag.categoryId" />
             </div>
-            <div class="form-group">
-                <label asp-for="MediaTypeId" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="MediaTypeId" class="control-label mb-1"></label>
                 <select asp-for="MediaTypeId" class="form-select" aria-label="Default select example">
                     <option value="1" selected>Video</option>
                     <option value="2">Artical</option>
                 </select>
                 <span asp-validation-for="MediaTypeId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group text-end">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" asp-route-id="@ViewBag.categoryId">Back to List</a>
+<div class="my-3">
+    <a asp-action="Index" class="btn btn-secondary" asp-route-id="@ViewBag.categoryId">Back to List</a>
 </div>
 
 @section Scripts {

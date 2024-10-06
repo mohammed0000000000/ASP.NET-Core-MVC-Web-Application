@@ -8,17 +8,16 @@
 }
 
 
-@if (Model.GroupedCategoryItemsByCategoryViewModels != null) {
+@if (User.Identity.IsAuthenticated) {
     <div class="row">
         <div class="col-md-6">
             <h2>Your Courses</h2>
         </div>
         <div class="col-md-6 text-right">
-            <a asp-controller="CategoriesToUser" asp-action="Index" class="btn btn-outline-dark">Choose Courses</a>
+            <a asp-controller="UsersToCategory" asp-action="Index" class="btn btn-outline-info">Choose Courses</a>
         </div>
     </div>
-
-    @if (Model.GroupedCategoryItemsByCategoryViewModels.Count() > 0) {
+    @if (Model?.GroupedCategoryItemsByCategoryViewModels.Count() > 0) {
 
         <div class="row mt-3">
             <div class="col-md-12">
@@ -50,15 +49,11 @@
             </div>
         </div>
     } else {
-        <h4 class="mt-2 text-warning">You are currently not matched with any courses</h4>
-
+     <h4 class="text-warning mt-2">You are currently Not Matched with any courses</h4>  
     }
 } else {
     <partial name="_DefaultHomePageContentPartial" model="@Model.Categories" />
 }
-
-
-
 
 <div class="modal fade" id="UserLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <partial name="_UserLoginPartial" model="new LoginViewModel

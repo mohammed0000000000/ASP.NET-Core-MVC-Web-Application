@@ -4,15 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
+<h1 class="my-4 text-primary">Category Items</h1>
 <p>
-    <a asp-action="CreateCategoryItem" asp-route-categoryId="@ViewBag.categoryId">Create New</a>
+    <a asp-action="CreateCategoryItem" asp-route-categoryId="@ViewBag.categoryId" class="text-decoration-none btn btn-outline-info"><i class="fa-solid fa-plus me-2"></i>Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -28,8 +26,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-             <td>@Html.DisplayFor(mdoelItem => item.Id)</td>
-
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -40,15 +36,15 @@
                 @Html.DisplayFor(modelItem => item.DateTimeItemReleased)
             </td>
             <td>
-                <a asp-action="UpdateCategoryItem" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailCategoryitem" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="DeleteCategoryItem" asp-route-id="@item.Id">Delete</a> |
+                    <a asp-action="UpdateCategoryItem" asp-route-id="@item.Id" class="text-info text-decoration-none me-2"> <i class="fa-solid fa-pen-to-square"></i> </a>
+                    <a asp-action="DetailCategoryitem" asp-route-id="@item.Id" class="text-dark text-decoration-none me-2"> <i class="fa-solid fa-table"></i> </a>
+                    <a asp-action="DeleteCategoryItem" asp-route-id="@item.Id" class="text-danger text-decoration-none me-2"> <i class="fa-solid fa-trash"></i> </a>
                 @{
                     if(item.Content is null) {
-                            <a asp-action="Create" asp-controller="Content" asp-route-id="@item.Id">Add Content</a>
+                            <a asp-action="Create" asp-controller="Content" asp-route-id="@item.Id" class="btn btn-outline-secondary text-decoration-none">Add Content</a>
                         }
                         else {
-                            <a asp-action="Update" asp-controller="Content" asp-route-id="@item.Content.Id">Update Content</a>
+                            <a asp-action="Update" asp-controller="Content" asp-route-id="@item.Content.Id" class="btn btn-outline-secondary text-decoration-none">Update Content</a>
                         }
                     }
             </td>

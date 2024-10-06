@@ -1,13 +1,12 @@
 ﻿@model List<TechWebApplication.Services.ViewModel.CategoryViewModel>
 @using TechWebApplication.Services.ViewModel;
-<h3 class="mt-4">Add Members to Category</h3>
-<hr />
+<h3 class="my-5 text-primary text-center">Add Members to Category</h3>
 <form id="MembersToCategory" asp-action="Index">
-    <div class="row">
+    <div class="row my-3">
         <div class="col-md-4">
             <div class="form-group">
-                <h4>Category</h4>
-                <select id="CategoryId" name="CategoryId" class="form-control">
+                <h4 class="my-3 border-secondary p-2 border-bottom border-2" style="width:fit-content;">Category</h4>
+                <select id="CategoryId" name="CategoryId" class="form-control border-secondary rounded-2 border border-2">
                     <option value="0">--Please choose a Category--</option>
                     @{
                         if (Model is not null)
@@ -23,12 +22,10 @@
         </div>
     </div>
     <div id="alert_placeholder my-2">
-
     </div>
-    <hr />
-    <div class="row">
+    <div class="row my-3">
         <div class="col-md-10">
-            <h4>Members</h4>
+            <h4 class="my-3 border-secondary p-2 border-bottom border-2" style="width:fit-content;">Members</h4>
             <div class="form-group">
                 <div id="UsersCheckList">
                     <partial name="_UsersListViewPartial" model="new UserCategoryListViewModel(){CategoryId = 0, Users = null,UsersSelected = null}"/>
@@ -38,13 +35,12 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <hr />
         </div>
     </div>
 
-    <div class="row">
+    <div class="row my-3">
         <div class="col-md-10">
-            <div class="form-group text-right">
+            <div class="form-group text-end">
                 <button type="button" id="SaveSelectedUsers" name="SaveSelectedUsers" class="btn btn-outline-info">Save</button>
             </div>
         </div>

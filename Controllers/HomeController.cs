@@ -38,33 +38,28 @@ namespace TechWebApplication.Controllers
                     groupedCategoryItemsByCategoryModels = await GetGroupedCategoryItemsByCategory(categoryItemDetailsModels);
 
                     categoryDetailsModel.GroupedCategoryItemsByCategoryViewModels = groupedCategoryItemsByCategoryModels;
-
                 }
 
             } else {
-                //var categories = await GetCategoriesThatHaveContent();
-
-                //categoryDetailsModel.Categories = categories;
-
+                var categories = await GetCategoriesThatHaveContent();
+                categoryDetailsModel.Categories = categories;
             }
-
             return View(categoryDetailsModel);
         }
 
-        private async Task<List<Category>> GetCategoriesThatHaveContent() {
+        private async Task<List<CategoryViewModel>> GetCategoriesThatHaveContent() {
             var categoriesWithContent = await (from category in _context.Category
                                                join categoryItem in _context.CategoryItem
                                                on category.Id equals categoryItem.CategoryId
                                                join content in _context.Contents
-                                               on categoryItem.Id equals content.CategoryItem.Id
-                                               select new Category {
+                                               on categoryItem.Id equals content.CategoryItemId
+                                               select new CategoryViewModel {
                                                    Id = category.Id,
                                                    Title = category.Title,
                                                    Description = category.Description,
                                                    ThumbnailImagePath = category.ThumbnailImagePath
                                                }).Distinct().ToListAsync();
             return categoriesWithContent;
-
         }
 
         private async Task<IEnumerable<GroupedCategoryItemsByCategoryViewModels>> GetGroupedCategoryItemsByCategory(IEnumerable<CategoryItemDetailsViewModel> categoryItemDetailsModels) {

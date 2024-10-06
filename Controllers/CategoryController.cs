@@ -42,7 +42,7 @@ namespace TechWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(int id) {
             var res = await services.GetById(id);
-            return View(res);
+            return View(model: res);
         }
 
         [HttpPost]

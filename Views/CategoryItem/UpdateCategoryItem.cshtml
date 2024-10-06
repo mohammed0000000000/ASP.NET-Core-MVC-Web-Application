@@ -4,10 +4,7 @@
     ViewData["Title"] = "UpdateCategoryItem";
 }
 
-<h1>UpdateCategoryItem</h1>
-
-<h4>CategoryItemViewModel</h4>
-<hr />
+<h1 class="my-4 text-primary">Update Item</h1>
 <div class="row">
     <div class="col-md-6">
         <form asp-action="UpdateCategoryItem" asp-controller="CategoryItem" asp-route-id="@Model.Id">
@@ -17,18 +14,18 @@
                 <input asp-for="Id" class="form-control" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label mb-1"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" rows="2"> </textarea>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label mb-1"></label>
+                <textarea asp-for="Description" class="form-control" rows="6"> </textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DateTimeItemReleased" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="DateTimeItemReleased" class="control-label mb-1"></label>
                 <input asp-for="DateTimeItemReleased" class="form-control" />
                 <span asp-validation-for="DateTimeItemReleased" class="text-danger"></span>
             </div>
@@ -43,15 +40,15 @@
                 <input asp-for="MediaTypeId" class="form-control" />
                 <span asp-validation-for="MediaTypeId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group text-end">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" asp-route-id="@Model.CategoryId">Back to List</a>
+<div class="my-3">
+    <a asp-action="Index" asp-route-id="@Model.CategoryId" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {

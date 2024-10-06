@@ -46,6 +46,7 @@ namespace TechWebApplication.Controllers
             var categoryItem = await categoryItemServices.GetById(content.CategoryItemId);
             var categoryItemMediaType = categoryItem.MediaTypeId;
             ViewBag.CategoryItemId = id;
+            ViewBag.CategoryId = categoryItem.CategoryId;
             ViewBag.CategoryItemMediaType = (categoryItemMediaType == 1 ? "Video" : "Article");
             return View(content);
         }

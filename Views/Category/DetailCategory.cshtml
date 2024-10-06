@@ -4,11 +4,9 @@
     ViewData["Title"] = "DetailCategory";
 }
 
-<h1>DetailCategory</h1>
+<h1 class="my-5 text-primary">Details</h1>
 
-<div>
-    <h4>CategoryViewModel</h4>
-    <hr />
+<div class="p-2">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
@@ -36,7 +34,7 @@
         </dd>
     </dl>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+<div class="my-3">
+    <a asp-action="UpdateCategory" asp-controller="Category" asp-route-id="@Model.Id" class="btn btn-primary me-3">Edit</a>
+    <a asp-action="Index" asp-controller="Category" class="btn btn-secondary">Back to List</a>
 </div>

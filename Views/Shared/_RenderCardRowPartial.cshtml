@@ -1,0 +1,16 @@
+﻿@model List<TechWebApplication.Services.ViewModel.CategoryViewModel>
+<div class="content d-flex justify-content-between flex-row">
+	@{
+		foreach (var item in @Model) {
+			<a href="#" class="text-decoration-none lh-base text-black">
+				<div class="card p-2" style="width: 18rem; height:16rem;">
+					<img src="~/images/@item.ThumbnailImagePath" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">@item.Title</h5>
+						<p class="card-text">@item.Description</p>
+					</div>
+				</div>
+			</a>
+		}
+	}
+</div>
