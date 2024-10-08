@@ -4,8 +4,10 @@
 <div class="hero section" style="height:80vh;">
 	<img class="img-fluid h-100" src="~/images/HeroImage.jpeg" alt="Alternate Text" />
 	<div class="hero-heading">
-		<h2 class="text-white fs-2">Learn Software Engineering at <strong class="text-cyan">TechTree</strong></h2>
+		<h2 class="text-white fs-2">Learn Software Engineering at <strong class="text-info">TechTree</strong></h2>
+        @if(!User.Identity.IsAuthenticated){
 		<a id="HeroRegisterButton" class="btn btn-outline-info btn-lg hero-register-button mt-2" data-bs-toggle="modal" data-bs-target="#UserRegistrationModal">Register</a>
+        }
 	</div>
 </div>
 <hr class="section-divider" />

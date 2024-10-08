@@ -1,0 +1,46 @@
+﻿@model TechWebApplication.Services.ViewModel.CategoryDetailsViewModel
+@{
+    ViewData["Title"] = "Library Page";
+}
+<div class="row">
+    <div class="col-md-6">
+        <h2>Your Courses</h2>
+    </div>
+    <div class="col-md-6 text-right">
+        <a asp-controller="UsersToCategory" asp-action="Courses" class="btn btn-outline-info">Choose Courses</a>
+    </div>
+</div>
+@if (Model?.GroupedCategoryItemsByCategoryViewModels.Count() > 0) {
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+
+            @foreach (var cat in Model.GroupedCategoryItemsByCategoryViewModels) {
+                <div class="card mt-2">
+                    <h4 class="card-header text-secondary bg-white" style="cursor:pointer" data-bs-toggle="collapse" data-bs-target="#collapse_@cat.Id" aria-expanded="false" aria-controls="collapse_@cat.Id">
+                        @cat.Title
+                    </h4>
+                    <div id="collapse_@cat.Id" class="collapse" aria-expanded="false" aria-controls="collapse_@cat.Id">
+                        <hr />
+                        @foreach (var item in cat.Items) {
+                            <div class="d-flex gap-2 mt-2 p-2 flex-row">
+                                <img src="~/Images/@item.MediaImagePath" width="100" height="100" class="img-thumbnail mr-2" />
+                                <div class="flex-grow-1">
+                                    <h5 class="card-title mt-2">
+                                        <a class="text-dark" asp-controller="Content" asp-action="Index" asp-route-Id="@item.CategoryItemId">@item.CategoryItemTitle</a>
+                                    </h5>
+                                    <p class="card-text text-dark mt-2">
+                                        @item.CategoryItemDescription
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+} else {
+    <h4 class="text-warning mt-2">You are currently Not Matched with any courses</h4>
+}

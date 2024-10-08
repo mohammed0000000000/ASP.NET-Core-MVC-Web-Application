@@ -119,6 +119,9 @@ select:focus{
     outline:none !important;
     border:none !important;
 }
+.card:hover{
+    cursor:pointer;
+}
 .footer {
     position: absolute;
     bottom: 0;

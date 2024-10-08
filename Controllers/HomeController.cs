@@ -25,6 +25,12 @@ namespace TechWebApplication.Controllers
         }
 
         public async Task<IActionResult> Index() {
+            CategoryDetailsViewModel categoryDetailsModel = new CategoryDetailsViewModel();
+            var categories = await GetCategoriesThatHaveContent();
+            categoryDetailsModel.Categories = categories;
+            return View(categoryDetailsModel);
+        }
+        public async Task<IActionResult> UserCourses(){
             IEnumerable<CategoryItemDetailsViewModel> categoryItemDetailsModels = null;
             IEnumerable<GroupedCategoryItemsByCategoryViewModels> groupedCategoryItemsByCategoryModels = null;
 
@@ -40,13 +46,9 @@ namespace TechWebApplication.Controllers
                     categoryDetailsModel.GroupedCategoryItemsByCategoryViewModels = groupedCategoryItemsByCategoryModels;
                 }
 
-            } else {
-                var categories = await GetCategoriesThatHaveContent();
-                categoryDetailsModel.Categories = categories;
             }
-            return View(categoryDetailsModel);
+            return View("UserLibrary",categoryDetailsModel);
         }
-
         private async Task<List<CategoryViewModel>> GetCategoriesThatHaveContent() {
             var categoriesWithContent = await (from category in _context.Category
                                                join categoryItem in _context.CategoryItem

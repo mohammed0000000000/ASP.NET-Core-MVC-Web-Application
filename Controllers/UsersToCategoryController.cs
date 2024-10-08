@@ -29,7 +29,7 @@ namespace TechWebApplication.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Index(){
+        public async Task<IActionResult> Index() {
             try {
                 var items = await context.Category.ToListAsync();
                 var res = mapper.Map<List<CategoryViewModel>>(items);
@@ -39,14 +39,13 @@ namespace TechWebApplication.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> GetUsersForCategory([FromQuery]int categoryId) {
+        public async Task<IActionResult> GetUsersForCategory([FromQuery] int categoryId) {
             try {
                 UserCategoryListViewModel res = new UserCategoryListViewModel();
                 res.Users = await GetAllUsers();
                 res.UsersSelected = await GetSavedSelectedUsersForCategory(categoryId);
                 return PartialView("_UsersListViewPartial", res);
-            } catch (Exception ex) 
-            { throw; }
+            } catch (Exception ex) { throw; }
         }
         public async Task<List<UserViewModel>> GetSavedSelectedUsersForCategory(int categoryId) {
             return await (
@@ -70,9 +69,9 @@ namespace TechWebApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveSelectedUsers([Bind("CategoryId, UsersSelected")]UserCategoryListViewModel usersCategoryListViewModel) {
+        public async Task<IActionResult> SaveSelectedUsers([Bind("CategoryId, UsersSelected")] UserCategoryListViewModel usersCategoryListViewModel) {
             List<UserCategory> usersSeletedForCategoryToAdd = null;
-            if(usersCategoryListViewModel.UsersSelected is not null)
+            if (usersCategoryListViewModel.UsersSelected is not null)
                 usersSeletedForCategoryToAdd = await GetUsersForCategoryToAdd(usersCategoryListViewModel);
             var usersSeletedForCategoryToDelete = await GetUsersForCategoryToDelete(usersCategoryListViewModel.CategoryId);
 
@@ -83,7 +82,7 @@ namespace TechWebApplication.Controllers
 
 
         private async Task<List<UserCategory>> GetUsersForCategoryToAdd(UserCategoryListViewModel usersCategoryListViewModel) {
-            var usersForCatgoryToAdd =  (
+            var usersForCatgoryToAdd = (
                 from userCategory in usersCategoryListViewModel.UsersSelected
                 select new UserCategory { CategoryId = usersCategoryListViewModel.CategoryId, UserId = userCategory.Id }
             ).ToList();
@@ -99,12 +98,12 @@ namespace TechWebApplication.Controllers
         }
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Courses(){
+        public async Task<IActionResult> Courses() {
             var categoryToUser = new UserToCategoryViewModel();
             categoryToUser.Categories = await GetCategoriesThatHaveContent();
             var userId = userManager.GetUserAsync(User).Result?.Id;
             categoryToUser.CategoriesSelecetd = await GetCategoriesThatSavedForUser(userId);
-            categoryToUser.UserId = userId; 
+            categoryToUser.UserId = userId;
             return View(categoryToUser);
         }
         private async Task<List<CategoryViewModel>> GetCategoriesThatHaveContent() {
@@ -121,21 +120,21 @@ namespace TechWebApplication.Controllers
                                                }).Distinct().ToListAsync();
             return categoriesWithContent;
         }
-        private async Task<List<UserCategory>> GetCategoriesToDeleteForUser(string userId){
+        private async Task<List<UserCategory>> GetCategoriesToDeleteForUser(string userId) {
             return await (
                 from userCat in context.UserCategory
                 where userCat.UserId == userId
                 select new UserCategory { Id = userCat.Id, UserId = userCat.UserId, CategoryId = userCat.CategoryId }
-            ).ToListAsync(); 
+            ).ToListAsync();
         }
-        private  List<UserCategory> GetCategoriesToAddForUser(string[]categoriesSelected, string userId){
+        private List<UserCategory> GetCategoriesToAddForUser(string[] categoriesSelected, string userId) {
             return (from categoryId in categoriesSelected
-                          select new UserCategory {
-                          UserId = userId,
-                          CategoryId = int.Parse(categoryId)
-                          }).ToList();
+                    select new UserCategory {
+                        UserId = userId,
+                        CategoryId = int.Parse(categoryId)
+                    }).ToList();
         }
-        private async Task<List<CategoryViewModel>> GetCategoriesThatSavedForUser(string userId){
+        private async Task<List<CategoryViewModel>> GetCategoriesThatSavedForUser(string userId) {
             return await (from userCat in context.UserCategory
                           where userCat.UserId == userId
                           select new CategoryViewModel {
@@ -145,14 +144,32 @@ namespace TechWebApplication.Controllers
         }
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AssignCoursesToUser(string[]categoriesSelected) {
+        public async Task<IActionResult> AssignCoursesToUser(string[] categoriesSelected) {
             var userId = userManager.GetUserAsync(User).Result?.Id;
-            var userCategoriesToAdd =  GetCategoriesToAddForUser(categoriesSelected, userId).ToList();
+            var userCategoriesToAdd = GetCategoriesToAddForUser(categoriesSelected, userId).ToList();
             var userCategoriesToDelete = await GetCategoriesToDeleteForUser(userId);
 
             await userCategoryServices.UpdateUserCategory(userCategoriesToDelete, userCategoriesToAdd);
-          
-            return RedirectToAction("Index","Home");
+
+            return RedirectToAction("Index", "Home");
+        }
+        [HttpPost]
+        public async Task<string> AssignCourseToUser([FromQuery]int categoryId) {
+            try {
+                var userId = userManager.GetUserAsync(User).Result?.Id;
+                if(userId is null){
+                    return "Unauhorized";
+                }
+                var isTake = await (from userCat in context.UserCategory where userCat.UserId == userId && userCat.CategoryId == categoryId select new { Id = userCat.Id}).FirstOrDefaultAsync();
+                if(isTake is null){
+                    return "false";
+                }
+                await context.UserCategory.AddAsync(new UserCategory() { UserId = userId, CategoryId = categoryId });
+                await context.SaveChangesAsync();
+                return "true";
+            } catch (Exception ex) {
+                throw;
+            }
         }
     }
 }

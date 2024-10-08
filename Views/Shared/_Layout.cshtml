@@ -27,26 +27,23 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home me-1 text-info"></i>Home</a>
                         </li>
                         @{
-                            if (!User.Identity.IsAuthenticated) {
-                                <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" href="#courses"><i class="fas fa-laptop-code me-1 text-info"></i>Courses</a>
-                                </li>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#contact-us"><i class="fas fa-phone-alt me-1 text-info"></i>Contact US</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#about-us"><i class="fas fa-chalkboard-teacher me-1 text-info"></i>About Us</a>
+                            </li>
+                            if (User.Identity.IsAuthenticated) {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" href="#contact-us"><i class="fas fa-phone-alt me-1 text-info"></i>Contact US</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" href="#about-us"><i class="fas fa-chalkboard-teacher me-1 text-info"></i>About Us</a>
+                                    <a class="nav-link text-dark" asp-action="UserCourses" asp-controller="Home"><i class="fa-solid fa-book-atlas me-1 text-info"></i> Library</a>
                                 </li>
                             }
-                        }
-                        
-                        @{
-                            //  ==> First Approach
-                            // if (User.IsInRole("Admin")) {
-                            //     <partial name="_AdminMenuPartial" />
-                            // }
 
-                            //Second Approach
+                        }
+                        @{
                                 <partial name="_AdminMenuPartial" />
                         }
                     </ul>
