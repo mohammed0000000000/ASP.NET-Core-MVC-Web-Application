@@ -9,7 +9,7 @@ namespace TechWebApplication.Comparers
             if (y is null) return false;
             if (x.Id == y.Id)
                 return true;
-            return false; ;
+            return false;
         }
 
         public int GetHashCode([DisallowNull] UserViewModel obj) {

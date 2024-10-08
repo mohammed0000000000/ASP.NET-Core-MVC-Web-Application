@@ -6,10 +6,10 @@
 <ul class="navbar-nav">
     @{
         if(User.Identity.IsAuthenticated) {
-            <li class="nav-item" style="transition:none !important; pointer-events:none !important;"><a class="nav-link text-dark">Hello  <span class="text-danger">@UserManager.GetUserAsync(User).Result?.FirstName </span> !<i class="fa-solid fa-hands text-info ms-1"></i></a></li>
+            <li class="nav-item" style="transition:none !important; pointer-events:none !important;"><a class="nav-link text-dark">Hello  <span class="text-danger text-decoration-underline">@UserManager.GetUserAsync(User).Result?.FirstName </span> !<i class="fa-solid fa-hands text-info ms-1"></i></a></li>
             <li class="nav-item text-dark" style="transition:none !important;"><a class="nav-link text-dark" asp-action="Logout" asp-controller="Account">Logout<i class="fa-solid fa-right-from-bracket text-info ms-2"></i></a></li>
         } else {
-            <li class="nav-item"><a class="nav-link text-dark" asp-action="Register" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#UserRegistrationModal"><i class="fas fa-user ms-1 text-info"></i>Register</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" asp-action="Register" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#UserRegistrationModal"><i class="fas fa-user me-1 text-info"></i>Register</a></li>
             <li class="nav-item"><a class="nav-link text-dark" asp-action="Login" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#UserLoginModal"><i class="fas fa-sign-in-alt me-1 text-info"></i>Login</a></li>
         }
     }

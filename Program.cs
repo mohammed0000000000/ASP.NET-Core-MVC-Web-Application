@@ -26,6 +26,7 @@ namespace TechWebApplication
             builder.Services.AddScoped<ICategoryItemServices, CategoryItemServices>();
             builder.Services.AddScoped<IContentServices, ContentServices>();
             builder.Services.AddScoped<IMediaTypeServices, MediaTypeServices>();
+            builder.Services.AddScoped<IUserCategoryServices, UserCatgoryServices>();
 
             // Register UserManager and Role Manager
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option => {

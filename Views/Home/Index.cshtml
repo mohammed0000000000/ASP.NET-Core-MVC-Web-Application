@@ -13,8 +13,8 @@
         <div class="col-md-6">
             <h2>Your Courses</h2>
         </div>
-        <div class="col-md-6 text-right">
-            <a asp-controller="UsersToCategory" asp-action="Index" class="btn btn-outline-info">Choose Courses</a>
+        <div class="col-md-6 text-primary text-right">
+            <a asp-controller="UsersToCategory" asp-action="Courses" class="btn btn-outline-info">Choose Courses</a>
         </div>
     </div>
     @if (Model?.GroupedCategoryItemsByCategoryViewModels.Count() > 0) {

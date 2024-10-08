@@ -7,6 +7,8 @@ using System.Linq.Expressions;
 using TechWebApplication.Models.Auth;
 using TechWebApplication.Models.Entities;
 using TechWebApplication.Repo.EntityFramework.Data;
+using TechWebApplication.Services.Contract;
+using TechWebApplication.Services.Implementation;
 using TechWebApplication.Services.ViewModel;
 
 namespace TechWebApplication.Controllers
@@ -15,12 +17,18 @@ namespace TechWebApplication.Controllers
     {
         private readonly AppDbContext context;
         private readonly IMapper mapper;
-        public UsersToCategoryController(AppDbContext context, IMapper mapper) {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserCategoryServices userCategoryServices;
+
+        public UsersToCategoryController(AppDbContext context, IMapper mapper, UserManager<ApplicationUser> userManager, IUserCategoryServices userCategoryServices) {
             this.context = context;
             this.mapper = mapper;
+            this.userManager = userManager;
+            this.userCategoryServices = userCategoryServices;
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Index(){
             try {
                 var items = await context.Category.ToListAsync();
@@ -67,20 +75,8 @@ namespace TechWebApplication.Controllers
             if(usersCategoryListViewModel.UsersSelected is not null)
                 usersSeletedForCategoryToAdd = await GetUsersForCategoryToAdd(usersCategoryListViewModel);
             var usersSeletedForCategoryToDelete = await GetUsersForCategoryToDelete(usersCategoryListViewModel.CategoryId);
-            using (var dbContextTransaction = await context.Database.BeginTransactionAsync()) {
-                try {
-                    context.UserCategory.RemoveRange(usersSeletedForCategoryToDelete);
-                    await context.SaveChangesAsync();
 
-                    if (usersSeletedForCategoryToAdd is not null){
-                        await context.UserCategory.AddRangeAsync(usersSeletedForCategoryToAdd);
-                        await context.SaveChangesAsync();
-                    }
-                    await dbContextTransaction.CommitAsync();
-                } catch (Exception ex) {
-                    await dbContextTransaction.DisposeAsync();
-                }
-            }
+            await userCategoryServices.UpdateUserCategory(usersSeletedForCategoryToDelete, usersSeletedForCategoryToAdd);
             usersCategoryListViewModel.Users = await GetAllUsers();
             return PartialView("_UserListViewPartial", usersCategoryListViewModel);
         }
@@ -100,6 +96,63 @@ namespace TechWebApplication.Controllers
                 select new UserCategory { Id = userCategory.Id, CategoryId = userCategory.CategoryId, UserId = userCategory.UserId }
             ).ToListAsync();
             return usersForCatgoryToDelete;
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Courses(){
+            var categoryToUser = new UserToCategoryViewModel();
+            categoryToUser.Categories = await GetCategoriesThatHaveContent();
+            var userId = userManager.GetUserAsync(User).Result?.Id;
+            categoryToUser.CategoriesSelecetd = await GetCategoriesThatSavedForUser(userId);
+            categoryToUser.UserId = userId; 
+            return View(categoryToUser);
+        }
+        private async Task<List<CategoryViewModel>> GetCategoriesThatHaveContent() {
+            var categoriesWithContent = await (from category in context.Category
+                                               join categoryItem in context.CategoryItem
+                                               on category.Id equals categoryItem.CategoryId
+                                               join content in context.Contents
+                                               on categoryItem.Id equals content.CategoryItemId
+                                               select new CategoryViewModel {
+                                                   Id = category.Id,
+                                                   Title = category.Title,
+                                                   Description = category.Description,
+                                                   ThumbnailImagePath = category.ThumbnailImagePath
+                                               }).Distinct().ToListAsync();
+            return categoriesWithContent;
+        }
+        private async Task<List<UserCategory>> GetCategoriesToDeleteForUser(string userId){
+            return await (
+                from userCat in context.UserCategory
+                where userCat.UserId == userId
+                select new UserCategory { Id = userCat.Id, UserId = userCat.UserId, CategoryId = userCat.CategoryId }
+            ).ToListAsync(); 
+        }
+        private  List<UserCategory> GetCategoriesToAddForUser(string[]categoriesSelected, string userId){
+            return (from categoryId in categoriesSelected
+                          select new UserCategory {
+                          UserId = userId,
+                          CategoryId = int.Parse(categoryId)
+                          }).ToList();
+        }
+        private async Task<List<CategoryViewModel>> GetCategoriesThatSavedForUser(string userId){
+            return await (from userCat in context.UserCategory
+                          where userCat.UserId == userId
+                          select new CategoryViewModel {
+                              Id = userCat.CategoryId
+                          }
+            ).ToListAsync();
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AssignCoursesToUser(string[]categoriesSelected) {
+            var userId = userManager.GetUserAsync(User).Result?.Id;
+            var userCategoriesToAdd =  GetCategoriesToAddForUser(categoriesSelected, userId).ToList();
+            var userCategoriesToDelete = await GetCategoriesToDeleteForUser(userId);
+
+            await userCategoryServices.UpdateUserCategory(userCategoriesToDelete, userCategoriesToAdd);
+          
+            return RedirectToAction("Index","Home");
         }
     }
 }
