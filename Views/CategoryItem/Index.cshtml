@@ -4,10 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="my-4 text-primary">Category Items</h1>
-<p>
-    <a asp-action="CreateCategoryItem" asp-route-categoryId="@ViewBag.categoryId" class="text-decoration-none btn btn-outline-info"><i class="fa-solid fa-plus me-2"></i>Create New</a>
-</p>
+@{
+    if (User.IsInRole("Admin")) {
+        <h1 class="my-4 text-primary">Category Items</h1>
+
+        <p>
+            <a asp-action="CreateCategoryItem" asp-route-categoryId="@ViewBag.categoryId" class="text-decoration-none btn btn-outline-info"><i class="fa-solid fa-plus me-2"></i>Create New</a>
+        </p>
+    } else {
+        <h1 class="my-4 text-primary">Topics</h1>
+
+    }
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -17,10 +26,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTimeItemReleased)
-            </th>
-            <th></th>
+            @{
+                if (User.IsInRole("Admin")) {
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateTimeItemReleased)
+                    </th>
+                    <th></th>
+                }
+            }
+
         </tr>
     </thead>
     <tbody>
@@ -32,23 +46,26 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeItemReleased)
-            </td>
-            <td>
-                    <a asp-action="UpdateCategoryItem" asp-route-id="@item.Id" class="text-info text-decoration-none me-2"> <i class="fa-solid fa-pen-to-square"></i> </a>
-                    <a asp-action="DetailCategoryitem" asp-route-id="@item.Id" class="text-dark text-decoration-none me-2"> <i class="fa-solid fa-table"></i> </a>
-                    <a asp-action="DeleteCategoryItem" asp-route-id="@item.Id" class="text-danger text-decoration-none me-2"> <i class="fa-solid fa-trash"></i> </a>
-                @{
-                    if(item.Content is null) {
-                            <a asp-action="Create" asp-controller="Content" asp-route-id="@item.Id" class="btn btn-outline-secondary text-decoration-none">Add Content</a>
+                @if (User.IsInRole("Admin")) {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTimeItemReleased)
+                    </td>
+                }
+                @if (User.IsInRole("Admin")) {
+                    <td>
+                        <a asp-action="UpdateCategoryItem" asp-route-id="@item.Id" class="text-info text-decoration-none me-2"> <i class="fa-solid fa-pen-to-square"></i> </a>
+                        <a asp-action="DetailCategoryitem" asp-route-id="@item.Id" class="text-dark text-decoration-none me-2"> <i class="fa-solid fa-table"></i> </a>
+                        <a asp-action="DeleteCategoryItem" asp-route-id="@item.Id" class="text-danger text-decoration-none me-2"> <i class="fa-solid fa-trash"></i> </a>
+                        @{
+                            if (item.Content is null) {
+                                <a asp-action="Create" asp-controller="Content" asp-route-id="@item.Id" class="btn btn-outline-secondary text-decoration-none">Add Content</a>
+                            } else {
+                                <a asp-action="Update" asp-controller="Content" asp-route-id="@item.Content.Id" class="btn btn-outline-secondary text-decoration-none">Update Content</a>
+                            }
                         }
-                        else {
-                            <a asp-action="Update" asp-controller="Content" asp-route-id="@item.Content.Id" class="btn btn-outline-secondary text-decoration-none">Update Content</a>
-                        }
-                    }
-            </td>
-        </tr>
+                    </td>
+                }
+            </tr>
 }
     </tbody>
 </table>

@@ -2,12 +2,14 @@
 <div class="content d-flex justify-content-between flex-row">
 	@{
 		foreach (var item in @Model) {
-			<div class="card p-2 text-decoration-none lh-base text-black card-click" style="width: 18rem; height:16rem;">
-				<input hidden value="@item.Id" />
+			<div class="card p-2 text-decoration-none lh-base text-black" style="width: 18rem; height:20rem;">
 				<img src="~/images/@item.ThumbnailImagePath" class="card-img-top" alt="...">
 				<div class="card-body">
 					<h5 class="card-title">@item.Title</h5>
-					<p class="card-text">@item.Description</p>
+					<p class="card-text overflow-hidden">@item.Description</p>
+					<div class="d-flex justify-content-between flex-row">
+						<a asp-action="Index" asp-controller="CategoryItem" asp-route-Id="@item.Id" class="btn btn-secondary card-link flex-fill" style="text-decoration:none;">Show</a>
+					</div>
 				</div>
 			</div>
 		}

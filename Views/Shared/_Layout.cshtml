@@ -36,7 +36,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="#about-us"><i class="fas fa-chalkboard-teacher me-1 text-info"></i>About Us</a>
                             </li>
-                            if (User.Identity.IsAuthenticated) {
+                            if (User.Identity.IsAuthenticated && !User.IsInRole("Admin")) {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-action="UserCourses" asp-controller="Home"><i class="fa-solid fa-book-atlas me-1 text-info"></i> Library</a>
                                 </li>
